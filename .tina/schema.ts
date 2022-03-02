@@ -3,6 +3,12 @@ import { defineSchema, TinaTemplate } from "@tinacms/cli";
 const genericFeatureBlockSchema: TinaTemplate = {
   name: "genericFeature",
   label: "Generic Feature",
+  ui: {
+    defaultItem: {
+      title: "Title placeholder",
+      text: "Phasellus scelerisque, libero eu finibus rutrum, risus risus accumsan libero, nec molestie urna dui a leo.",
+    },
+  },
   fields: [
     {
       type: "string",
