@@ -1,0 +1,38 @@
+query getCampaignsDocument($relativePath: String!) {
+  getCampaignsDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...CampaignsParts
+    }
+  }
+}
+
+query getCampaignsList {
+  getCampaignsList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...CampaignsParts
+        }
+      }
+    }
+  }
+}

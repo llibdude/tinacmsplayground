@@ -1,0 +1,38 @@
+{
+  "DocumentConnection": {
+    "type": "DocumentConnection",
+    "resolveType": "multiCollectionDocumentList",
+    "collections": [
+      "campaigns"
+    ]
+  },
+  "Node": {
+    "type": "Node",
+    "resolveType": "nodeDocument"
+  },
+  "DocumentNode": {
+    "type": "DocumentNode",
+    "resolveType": "multiCollectionDocument",
+    "createDocument": "create",
+    "updateDocument": "update"
+  },
+  "CampaignsBlocks": {
+    "type": "CampaignsBlocks",
+    "resolveType": "unionData",
+    "typeMap": {
+      "genericFeature": "CampaignsBlocksGenericFeature"
+    }
+  },
+  "CampaignsDocument": {
+    "type": "CampaignsDocument",
+    "resolveType": "collectionDocument",
+    "collection": "campaigns",
+    "createCampaignsDocument": "create",
+    "updateCampaignsDocument": "update"
+  },
+  "CampaignsConnection": {
+    "type": "CampaignsConnection",
+    "resolveType": "collectionDocumentList",
+    "collection": "campaigns"
+  }
+}

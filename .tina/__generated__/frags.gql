@@ -1,0 +1,14 @@
+fragment CampaignsParts on Campaigns {
+  hero {
+    __typename
+    title
+    text
+  }
+  blocks {
+    __typename
+    ... on CampaignsBlocksGenericFeature {
+      title
+      text
+    }
+  }
+}
