@@ -52,15 +52,27 @@ const Campaign: React.FC<any> = (props) => {
   return (
     <div className="mx-10">
       {d.hero && (
-        <div>
-          <h1 className="text-5xl font-semibold mb-2">{d.hero.title}</h1>
-          <TinaMarkdown content={d.hero.text} />
+        <div data-tinafield="hero">
+          <h1
+            className="text-5xl font-semibold mb-2"
+            data-tinafield="hero.title"
+          >
+            {d.hero.title}
+          </h1>
+          <div data-tinafield="hero.text">
+            <TinaMarkdown content={d.hero.text} />
+          </div>
         </div>
       )}
       {d.blocks?.map((block) => {
         return (
           <section className="my-5">
-            <h2 className="text-3xl font-semibold mb-2">{block.title}</h2>
+            <h2
+              className="text-3xl font-semibold mb-2"
+              data-tinafield="hero.title"
+            >
+              {block.title}
+            </h2>
             <TinaMarkdown content={block.text} />
           </section>
         );
