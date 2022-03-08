@@ -77,7 +77,23 @@ type Collection {
 
 union DocumentNode = CampaignsDocument
 
+type CampaignsHeroMediaImageMedia {
+  featureImage: String
+}
+
+type CampaignsHeroMediaMdxMedia {
+  featureMDX: JSON
+}
+
+type CampaignsHeroMediaYoutubeMedia {
+  featureYoutube: String
+  featureYoutubeTitle: String
+}
+
+union CampaignsHeroMedia = CampaignsHeroMediaImageMedia | CampaignsHeroMediaMdxMedia | CampaignsHeroMediaYoutubeMedia
+
 type CampaignsHero {
+  media: [CampaignsHeroMedia]
   title: String
   text: JSON
 }
@@ -126,7 +142,27 @@ input DocumentMutation {
   campaigns: CampaignsMutation
 }
 
+input CampaignsHeroMediaImageMediaMutation {
+  featureImage: String
+}
+
+input CampaignsHeroMediaMdxMediaMutation {
+  featureMDX: JSON
+}
+
+input CampaignsHeroMediaYoutubeMediaMutation {
+  featureYoutube: String
+  featureYoutubeTitle: String
+}
+
+input CampaignsHeroMediaMutation {
+  imageMedia: CampaignsHeroMediaImageMediaMutation
+  mdxMedia: CampaignsHeroMediaMdxMediaMutation
+  youtubeMedia: CampaignsHeroMediaYoutubeMediaMutation
+}
+
 input CampaignsHeroMutation {
+  media: [CampaignsHeroMediaMutation]
   title: String
   text: JSON
 }
