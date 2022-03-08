@@ -1,6 +1,19 @@
 fragment CampaignsParts on Campaigns {
   hero {
     __typename
+    media {
+      __typename
+      ... on CampaignsHeroMediaImageMedia {
+        featureImage
+      }
+      ... on CampaignsHeroMediaMdxMedia {
+        featureMDX
+      }
+      ... on CampaignsHeroMediaYoutubeMedia {
+        featureYoutube
+        featureYoutubeTitle
+      }
+    }
     title
     text
   }
