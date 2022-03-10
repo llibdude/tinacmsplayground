@@ -54,7 +54,7 @@ const Campaign: React.FC<any> = (props) => {
       {d.hero && (
         <div data-tinafield="hero">
           <h1
-            className="text-5xl font-semibold mb-2"
+            className="mb-2 text-5xl font-semibold"
             data-tinafield="hero.title"
           >
             {d.hero.title}
@@ -64,11 +64,11 @@ const Campaign: React.FC<any> = (props) => {
           </div>
         </div>
       )}
-      {d.blocks?.map((block) => {
+      {d.blocks?.map((block, index) => {
         return (
-          <section className="my-5">
+          <section className="my-5" key={index}>
             <h2
-              className="text-3xl font-semibold mb-2"
+              className="mb-2 text-3xl font-semibold"
               data-tinafield="hero.title"
             >
               {block.title}
