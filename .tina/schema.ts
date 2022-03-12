@@ -1,4 +1,5 @@
 import { defineSchema, TinaTemplate } from "@tinacms/cli";
+import { importedGenericFeature } from "./schemas/features";
 
 const genericFeatureBlockSchema: TinaTemplate = {
   name: "genericFeature",
@@ -72,7 +73,7 @@ export default defineSchema({
           ui: {
             visualSelector: true,
           },
-          templates: [genericFeatureBlockSchema],
+          templates: [importedGenericFeature],
         },
       ],
     },
