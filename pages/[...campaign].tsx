@@ -49,6 +49,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 const Campaign: React.FC<any> = (props) => {
   const d = props.data.getCampaignsDocument.data;
+  console.log("DATA", d);
   return (
     <div className="mx-10">
       {d.hero && (

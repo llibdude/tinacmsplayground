@@ -144,8 +144,17 @@ export type CollectionDocumentsArgs = {
 
 export type DocumentNode = CampaignsDocument;
 
+export type CampaignsHeroMediaGenericFeature = {
+  __typename?: 'CampaignsHeroMediaGenericFeature';
+  title?: Maybe<Scalars['String']>;
+  text?: Maybe<Scalars['JSON']>;
+};
+
+export type CampaignsHeroMedia = CampaignsHeroMediaGenericFeature;
+
 export type CampaignsHero = {
   __typename?: 'CampaignsHero';
+  media?: Maybe<Array<Maybe<CampaignsHeroMedia>>>;
   title?: Maybe<Scalars['String']>;
   text?: Maybe<Scalars['JSON']>;
 };
@@ -233,7 +242,17 @@ export type DocumentMutation = {
   campaigns?: InputMaybe<CampaignsMutation>;
 };
 
+export type CampaignsHeroMediaGenericFeatureMutation = {
+  title?: InputMaybe<Scalars['String']>;
+  text?: InputMaybe<Scalars['JSON']>;
+};
+
+export type CampaignsHeroMediaMutation = {
+  genericFeature?: InputMaybe<CampaignsHeroMediaGenericFeatureMutation>;
+};
+
 export type CampaignsHeroMutation = {
+  media?: InputMaybe<Array<InputMaybe<CampaignsHeroMediaMutation>>>;
   title?: InputMaybe<Scalars['String']>;
   text?: InputMaybe<Scalars['JSON']>;
 };
@@ -252,24 +271,31 @@ export type CampaignsMutation = {
   blocks?: InputMaybe<Array<InputMaybe<CampaignsBlocksMutation>>>;
 };
 
-export type CampaignsPartsFragment = { __typename?: 'Campaigns', hero?: { __typename: 'CampaignsHero', title?: string | null, text?: any | null } | null, blocks?: Array<{ __typename: 'CampaignsBlocksGenericFeature', title?: string | null, text?: any | null } | null> | null };
+export type CampaignsPartsFragment = { __typename?: 'Campaigns', hero?: { __typename: 'CampaignsHero', title?: string | null, text?: any | null, media?: Array<{ __typename: 'CampaignsHeroMediaGenericFeature', title?: string | null, text?: any | null } | null> | null } | null, blocks?: Array<{ __typename: 'CampaignsBlocksGenericFeature', title?: string | null, text?: any | null } | null> | null };
 
 export type GetCampaignsDocumentQueryVariables = Exact<{
   relativePath: Scalars['String'];
 }>;
 
 
-export type GetCampaignsDocumentQuery = { __typename?: 'Query', getCampaignsDocument: { __typename?: 'CampaignsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Campaigns', hero?: { __typename: 'CampaignsHero', title?: string | null, text?: any | null } | null, blocks?: Array<{ __typename: 'CampaignsBlocksGenericFeature', title?: string | null, text?: any | null } | null> | null } } };
+export type GetCampaignsDocumentQuery = { __typename?: 'Query', getCampaignsDocument: { __typename?: 'CampaignsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Campaigns', hero?: { __typename: 'CampaignsHero', title?: string | null, text?: any | null, media?: Array<{ __typename: 'CampaignsHeroMediaGenericFeature', title?: string | null, text?: any | null } | null> | null } | null, blocks?: Array<{ __typename: 'CampaignsBlocksGenericFeature', title?: string | null, text?: any | null } | null> | null } } };
 
 export type GetCampaignsListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCampaignsListQuery = { __typename?: 'Query', getCampaignsList: { __typename?: 'CampaignsConnection', totalCount: number, edges?: Array<{ __typename?: 'CampaignsConnectionEdges', node?: { __typename?: 'CampaignsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Campaigns', hero?: { __typename: 'CampaignsHero', title?: string | null, text?: any | null } | null, blocks?: Array<{ __typename: 'CampaignsBlocksGenericFeature', title?: string | null, text?: any | null } | null> | null } } | null } | null> | null } };
+export type GetCampaignsListQuery = { __typename?: 'Query', getCampaignsList: { __typename?: 'CampaignsConnection', totalCount: number, edges?: Array<{ __typename?: 'CampaignsConnectionEdges', node?: { __typename?: 'CampaignsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Campaigns', hero?: { __typename: 'CampaignsHero', title?: string | null, text?: any | null, media?: Array<{ __typename: 'CampaignsHeroMediaGenericFeature', title?: string | null, text?: any | null } | null> | null } | null, blocks?: Array<{ __typename: 'CampaignsBlocksGenericFeature', title?: string | null, text?: any | null } | null> | null } } | null } | null> | null } };
 
 export const CampaignsPartsFragmentDoc = gql`
     fragment CampaignsParts on Campaigns {
   hero {
     __typename
+    media {
+      __typename
+      ... on CampaignsHeroMediaGenericFeature {
+        title
+        text
+      }
+    }
     title
     text
   }

@@ -16,6 +16,13 @@
     "createDocument": "create",
     "updateDocument": "update"
   },
+  "CampaignsHeroMedia": {
+    "type": "CampaignsHeroMedia",
+    "resolveType": "unionData",
+    "typeMap": {
+      "genericFeature": "CampaignsHeroMediaGenericFeature"
+    }
+  },
   "CampaignsBlocks": {
     "type": "CampaignsBlocks",
     "resolveType": "unionData",

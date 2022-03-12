@@ -1,6 +1,13 @@
 fragment CampaignsParts on Campaigns {
   hero {
     __typename
+    media {
+      __typename
+      ... on CampaignsHeroMediaGenericFeature {
+        title
+        text
+      }
+    }
     title
     text
   }

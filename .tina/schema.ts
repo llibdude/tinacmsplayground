@@ -43,6 +43,16 @@ export default defineSchema({
           },
           fields: [
             {
+              type: "object",
+              name: "media",
+              label: "Media Type",
+              list: true,
+              ui: {
+                visualSelector: true,
+              },
+              templates: [genericFeatureBlockSchema],
+            },
+            {
               type: "string",
               label: "Title",
               name: "title",

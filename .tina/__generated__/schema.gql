@@ -77,7 +77,15 @@ type Collection {
 
 union DocumentNode = CampaignsDocument
 
+type CampaignsHeroMediaGenericFeature {
+  title: String
+  text: JSON
+}
+
+union CampaignsHeroMedia = CampaignsHeroMediaGenericFeature
+
 type CampaignsHero {
+  media: [CampaignsHeroMedia]
   title: String
   text: JSON
 }
@@ -126,7 +134,17 @@ input DocumentMutation {
   campaigns: CampaignsMutation
 }
 
+input CampaignsHeroMediaGenericFeatureMutation {
+  title: String
+  text: JSON
+}
+
+input CampaignsHeroMediaMutation {
+  genericFeature: CampaignsHeroMediaGenericFeatureMutation
+}
+
 input CampaignsHeroMutation {
+  media: [CampaignsHeroMediaMutation]
   title: String
   text: JSON
 }
