@@ -26,6 +26,19 @@ const genericFeatureBlockSchema: TinaTemplate = {
 export default defineSchema({
   collections: [
     {
+      label: "Blog",
+      name: "blog",
+      format: "mdx",
+      path: "content/blog",
+      fields: [
+        {
+          type: "string",
+          name: "title",
+          label: "Title",
+        },
+      ],
+    },
+    {
       label: "Campaigns",
       name: "campaigns",
       format: "mdx",

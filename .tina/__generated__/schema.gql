@@ -42,14 +42,17 @@ interface Connection {
 }
 
 type Query {
+  getOptimizedQuery(queryString: String!): String
   getCollection(collection: String): Collection!
   getCollections: [Collection!]!
   node(id: String): Node!
   getDocument(collection: String, relativePath: String): DocumentNode!
-  getDocumentList(before: String, after: String, first: Float, last: Float): DocumentConnection!
+  getDocumentList(before: String, after: String, first: Float, last: Float, sort: String): DocumentConnection!
   getDocumentFields: JSON!
+  getBlogDocument(relativePath: String): BlogDocument!
+  getBlogList(before: String, after: String, first: Float, last: Float, sort: String): BlogConnection!
   getCampaignsDocument(relativePath: String): CampaignsDocument!
-  getCampaignsList(before: String, after: String, first: Float, last: Float): CampaignsConnection!
+  getCampaignsList(before: String, after: String, first: Float, last: Float, sort: String): CampaignsConnection!
 }
 
 type DocumentConnectionEdges {
@@ -72,10 +75,34 @@ type Collection {
   matches: String
   templates: [JSON]
   fields: [JSON]
-  documents(before: String, after: String, first: Float, last: Float): DocumentConnection!
+  documents(before: String, after: String, first: Float, last: Float, sort: String): DocumentConnection!
 }
 
-union DocumentNode = CampaignsDocument
+union DocumentNode = BlogDocument | CampaignsDocument
+
+type Blog {
+  title: String
+}
+
+type BlogDocument implements Node & Document {
+  id: ID!
+  sys: SystemInfo!
+  data: Blog!
+  form: JSON!
+  values: JSON!
+  dataJSON: JSON!
+}
+
+type BlogConnectionEdges {
+  cursor: String
+  node: BlogDocument
+}
+
+type BlogConnection implements Connection {
+  pageInfo: PageInfo
+  totalCount: Float!
+  edges: [BlogConnectionEdges]
+}
 
 type CampaignsHeroMediaGenericFeature {
   title: String
@@ -126,12 +153,19 @@ type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
   createDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
+  updateBlogDocument(relativePath: String!, params: BlogMutation!): BlogDocument!
+  createBlogDocument(relativePath: String!, params: BlogMutation!): BlogDocument!
   updateCampaignsDocument(relativePath: String!, params: CampaignsMutation!): CampaignsDocument!
   createCampaignsDocument(relativePath: String!, params: CampaignsMutation!): CampaignsDocument!
 }
 
 input DocumentMutation {
+  blog: BlogMutation
   campaigns: CampaignsMutation
+}
+
+input BlogMutation {
+  title: String
 }
 
 input CampaignsHeroMediaGenericFeatureMutation {

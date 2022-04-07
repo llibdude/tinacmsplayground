@@ -1,3 +1,42 @@
+query getBlogDocument($relativePath: String!) {
+  getBlogDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...BlogParts
+    }
+  }
+}
+
+query getBlogList {
+  getBlogList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...BlogParts
+        }
+      }
+    }
+  }
+}
+
 query getCampaignsDocument($relativePath: String!) {
   getCampaignsDocument(relativePath: $relativePath) {
     sys {

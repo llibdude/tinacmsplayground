@@ -61,14 +61,22 @@ export type Connection = {
 
 export type Query = {
   __typename?: 'Query';
+  getOptimizedQuery?: Maybe<Scalars['String']>;
   getCollection: Collection;
   getCollections: Array<Collection>;
   node: Node;
   getDocument: DocumentNode;
   getDocumentList: DocumentConnection;
   getDocumentFields: Scalars['JSON'];
+  getBlogDocument: BlogDocument;
+  getBlogList: BlogConnection;
   getCampaignsDocument: CampaignsDocument;
   getCampaignsList: CampaignsConnection;
+};
+
+
+export type QueryGetOptimizedQueryArgs = {
+  queryString: Scalars['String'];
 };
 
 
@@ -93,6 +101,21 @@ export type QueryGetDocumentListArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Float']>;
   last?: InputMaybe<Scalars['Float']>;
+  sort?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetBlogDocumentArgs = {
+  relativePath?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetBlogListArgs = {
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Float']>;
+  last?: InputMaybe<Scalars['Float']>;
+  sort?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -106,6 +129,7 @@ export type QueryGetCampaignsListArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Float']>;
   last?: InputMaybe<Scalars['Float']>;
+  sort?: InputMaybe<Scalars['String']>;
 };
 
 export type DocumentConnectionEdges = {
@@ -140,9 +164,38 @@ export type CollectionDocumentsArgs = {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Float']>;
   last?: InputMaybe<Scalars['Float']>;
+  sort?: InputMaybe<Scalars['String']>;
 };
 
-export type DocumentNode = CampaignsDocument;
+export type DocumentNode = BlogDocument | CampaignsDocument;
+
+export type Blog = {
+  __typename?: 'Blog';
+  title?: Maybe<Scalars['String']>;
+};
+
+export type BlogDocument = Node & Document & {
+  __typename?: 'BlogDocument';
+  id: Scalars['ID'];
+  sys: SystemInfo;
+  data: Blog;
+  form: Scalars['JSON'];
+  values: Scalars['JSON'];
+  dataJSON: Scalars['JSON'];
+};
+
+export type BlogConnectionEdges = {
+  __typename?: 'BlogConnectionEdges';
+  cursor?: Maybe<Scalars['String']>;
+  node?: Maybe<BlogDocument>;
+};
+
+export type BlogConnection = Connection & {
+  __typename?: 'BlogConnection';
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Float'];
+  edges?: Maybe<Array<Maybe<BlogConnectionEdges>>>;
+};
 
 export type CampaignsHeroMediaGenericFeature = {
   __typename?: 'CampaignsHeroMediaGenericFeature';
@@ -201,6 +254,8 @@ export type Mutation = {
   addPendingDocument: DocumentNode;
   updateDocument: DocumentNode;
   createDocument: DocumentNode;
+  updateBlogDocument: BlogDocument;
+  createBlogDocument: BlogDocument;
   updateCampaignsDocument: CampaignsDocument;
   createCampaignsDocument: CampaignsDocument;
 };
@@ -227,6 +282,18 @@ export type MutationCreateDocumentArgs = {
 };
 
 
+export type MutationUpdateBlogDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: BlogMutation;
+};
+
+
+export type MutationCreateBlogDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: BlogMutation;
+};
+
+
 export type MutationUpdateCampaignsDocumentArgs = {
   relativePath: Scalars['String'];
   params: CampaignsMutation;
@@ -239,7 +306,12 @@ export type MutationCreateCampaignsDocumentArgs = {
 };
 
 export type DocumentMutation = {
+  blog?: InputMaybe<BlogMutation>;
   campaigns?: InputMaybe<CampaignsMutation>;
+};
+
+export type BlogMutation = {
+  title?: InputMaybe<Scalars['String']>;
 };
 
 export type CampaignsHeroMediaGenericFeatureMutation = {
@@ -271,7 +343,21 @@ export type CampaignsMutation = {
   blocks?: InputMaybe<Array<InputMaybe<CampaignsBlocksMutation>>>;
 };
 
+export type BlogPartsFragment = { __typename?: 'Blog', title?: string | null };
+
 export type CampaignsPartsFragment = { __typename?: 'Campaigns', hero?: { __typename: 'CampaignsHero', title?: string | null, text?: any | null, media?: Array<{ __typename: 'CampaignsHeroMediaGenericFeature', title?: string | null, text?: any | null } | null> | null } | null, blocks?: Array<{ __typename: 'CampaignsBlocksGenericFeature', title?: string | null, text?: any | null } | null> | null };
+
+export type GetBlogDocumentQueryVariables = Exact<{
+  relativePath: Scalars['String'];
+}>;
+
+
+export type GetBlogDocumentQuery = { __typename?: 'Query', getBlogDocument: { __typename?: 'BlogDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Blog', title?: string | null } } };
+
+export type GetBlogListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBlogListQuery = { __typename?: 'Query', getBlogList: { __typename?: 'BlogConnection', totalCount: number, edges?: Array<{ __typename?: 'BlogConnectionEdges', node?: { __typename?: 'BlogDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Blog', title?: string | null } } | null } | null> | null } };
 
 export type GetCampaignsDocumentQueryVariables = Exact<{
   relativePath: Scalars['String'];
@@ -285,6 +371,11 @@ export type GetCampaignsListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCampaignsListQuery = { __typename?: 'Query', getCampaignsList: { __typename?: 'CampaignsConnection', totalCount: number, edges?: Array<{ __typename?: 'CampaignsConnectionEdges', node?: { __typename?: 'CampaignsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Campaigns', hero?: { __typename: 'CampaignsHero', title?: string | null, text?: any | null, media?: Array<{ __typename: 'CampaignsHeroMediaGenericFeature', title?: string | null, text?: any | null } | null> | null } | null, blocks?: Array<{ __typename: 'CampaignsBlocksGenericFeature', title?: string | null, text?: any | null } | null> | null } } | null } | null> | null } };
 
+export const BlogPartsFragmentDoc = gql`
+    fragment BlogParts on Blog {
+  title
+}
+    `;
 export const CampaignsPartsFragmentDoc = gql`
     fragment CampaignsParts on Campaigns {
   hero {
@@ -308,6 +399,47 @@ export const CampaignsPartsFragmentDoc = gql`
   }
 }
     `;
+export const GetBlogDocumentDocument = gql`
+    query getBlogDocument($relativePath: String!) {
+  getBlogDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...BlogParts
+    }
+  }
+}
+    ${BlogPartsFragmentDoc}`;
+export const GetBlogListDocument = gql`
+    query getBlogList {
+  getBlogList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...BlogParts
+        }
+      }
+    }
+  }
+}
+    ${BlogPartsFragmentDoc}`;
 export const GetCampaignsDocumentDocument = gql`
     query getCampaignsDocument($relativePath: String!) {
   getCampaignsDocument(relativePath: $relativePath) {
@@ -352,7 +484,13 @@ export const GetCampaignsListDocument = gql`
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
-      getCampaignsDocument(variables: GetCampaignsDocumentQueryVariables, options?: C): Promise<{data: GetCampaignsDocumentQuery, variables: GetCampaignsDocumentQueryVariables, query: string}> {
+      getBlogDocument(variables: GetBlogDocumentQueryVariables, options?: C): Promise<{data: GetBlogDocumentQuery, variables: GetBlogDocumentQueryVariables, query: string}> {
+        return requester<{data: GetBlogDocumentQuery, variables: GetBlogDocumentQueryVariables, query: string}, GetBlogDocumentQueryVariables>(GetBlogDocumentDocument, variables, options);
+      },
+    getBlogList(variables?: GetBlogListQueryVariables, options?: C): Promise<{data: GetBlogListQuery, variables: GetBlogListQueryVariables, query: string}> {
+        return requester<{data: GetBlogListQuery, variables: GetBlogListQueryVariables, query: string}, GetBlogListQueryVariables>(GetBlogListDocument, variables, options);
+      },
+    getCampaignsDocument(variables: GetCampaignsDocumentQueryVariables, options?: C): Promise<{data: GetCampaignsDocumentQuery, variables: GetCampaignsDocumentQueryVariables, query: string}> {
         return requester<{data: GetCampaignsDocumentQuery, variables: GetCampaignsDocumentQueryVariables, query: string}, GetCampaignsDocumentQueryVariables>(GetCampaignsDocumentDocument, variables, options);
       },
     getCampaignsList(variables?: GetCampaignsListQueryVariables, options?: C): Promise<{data: GetCampaignsListQuery, variables: GetCampaignsListQueryVariables, query: string}> {

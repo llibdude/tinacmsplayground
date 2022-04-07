@@ -1,3 +1,7 @@
+fragment BlogParts on Blog {
+  title
+}
+
 fragment CampaignsParts on Campaigns {
   hero {
     __typename

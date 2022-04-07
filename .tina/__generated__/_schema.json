@@ -1,12 +1,32 @@
 {
   "version": {
-    "fullVersion": "0.59.6",
+    "fullVersion": "0.59.10",
     "major": "0",
     "minor": "59",
-    "patch": "6"
+    "patch": "10"
   },
   "meta": {},
   "collections": [
+    {
+      "label": "Blog",
+      "name": "blog",
+      "format": "mdx",
+      "path": "content/blog",
+      "fields": [
+        {
+          "type": "string",
+          "name": "title",
+          "label": "Title",
+          "namespace": [
+            "blog",
+            "title"
+          ]
+        }
+      ],
+      "namespace": [
+        "blog"
+      ]
+    },
     {
       "label": "Campaigns",
       "name": "campaigns",
