@@ -37,7 +37,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 const getStaticPropsOtherCMS = async () => {};
 
-const getStaticPropsSanity = async (params) => {
+const getStaticPropsTina = async (params) => {
   const client = ExperimentalGetTinaClient();
   const relativePath = String(`${params.slug}.mdx`);
 
@@ -66,18 +66,23 @@ const getStaticPropsSanity = async (params) => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const [tinaProps, sanityProps] = await Promise.all([
-    getStaticPropsOtherCMS(),
-    getStaticPropsSanity(params),
-  ]);
+  let otherProps: any, tinaProps: any;
+  try {
+    [otherProps, tinaProps] = await Promise.all([
+      getStaticPropsOtherCMS(),
+      getStaticPropsTina(params),
+    ]);
+  } catch {
+    console.log("caught");
+  }
 
   return {
-    props: { sanityProps: sanityProps, tinaProps: tinaProps },
+    props: { otherProps, tinaProps },
     revalidate: 5,
   };
 };
 
-const SpecificBlog: React.FC<any> = ({ sanityProps, tinaProps }) => {
+const SpecificBlog: React.FC<any> = ({ otherProps, tinaProps }) => {
   return <div>Stuff</div>;
 };
 
