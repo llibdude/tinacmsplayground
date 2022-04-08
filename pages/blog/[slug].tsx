@@ -35,7 +35,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-const getStaticPropsOtherCMS = async () => {};
+const getStaticPropsOtherCMS = async () => {
+  return new Promise((resolve) => resolve({}));
+};
 
 const getStaticPropsTina = async (params) => {
   const client = ExperimentalGetTinaClient();
