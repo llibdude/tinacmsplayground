@@ -11,6 +11,7 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 
 import { ExperimentalGetTinaClient } from "../.tina/__generated__/types";
+import { useTina } from "tinacms/dist/edit-state";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = ExperimentalGetTinaClient();
@@ -48,8 +49,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 const Campaign: React.FC<any> = (props) => {
-  const d = props.data.getCampaignsDocument.data;
-  console.log("DATA", d);
+  const { data } = useTina({
+    query: props.query,
+    variables: props.variables,
+    data: props.data,
+  });
+
+  const d = data.getCampaignsDocument.data;
+
   return (
     <div className="mx-10">
       {d.hero && (

@@ -42,14 +42,15 @@ interface Connection {
 }
 
 type Query {
+  getOptimizedQuery(queryString: String!): String
   getCollection(collection: String): Collection!
   getCollections: [Collection!]!
   node(id: String): Node!
   getDocument(collection: String, relativePath: String): DocumentNode!
-  getDocumentList(before: String, after: String, first: Float, last: Float): DocumentConnection!
+  getDocumentList(before: String, after: String, first: Float, last: Float, sort: String): DocumentConnection!
   getDocumentFields: JSON!
   getCampaignsDocument(relativePath: String): CampaignsDocument!
-  getCampaignsList(before: String, after: String, first: Float, last: Float): CampaignsConnection!
+  getCampaignsList(before: String, after: String, first: Float, last: Float, sort: String): CampaignsConnection!
 }
 
 type DocumentConnectionEdges {
@@ -72,7 +73,7 @@ type Collection {
   matches: String
   templates: [JSON]
   fields: [JSON]
-  documents(before: String, after: String, first: Float, last: Float): DocumentConnection!
+  documents(before: String, after: String, first: Float, last: Float, sort: String): DocumentConnection!
 }
 
 union DocumentNode = CampaignsDocument

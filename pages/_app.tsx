@@ -5,6 +5,11 @@ import { TinaEditProvider } from "tinacms/dist/edit-state";
 const TinaCMS = dynamic(() => import("tinacms"), { ssr: false });
 
 const branch = process.env.NEXT_PUBLIC_EDIT_BRANCH || "main";
+const clientId = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
+const apiURL =
+  process.env.NODE_ENV == "development"
+    ? "http://localhost:4001/graphql"
+    : `https://content.tinajs.io/content/${clientId}/github/${branch}`;
 
 const App = ({ Component, pageProps }) => {
   return (
@@ -12,8 +17,7 @@ const App = ({ Component, pageProps }) => {
       showEditButton={true}
       editMode={
         <TinaCMS
-          branch={branch}
-          isLocalClient={true}
+          apiURL={apiURL}
           documentCreatorCallback={{
             /**
              * After a new document is created, redirect to its location
@@ -28,10 +32,6 @@ const App = ({ Component, pageProps }) => {
             cms.flags.set("tina-admin", true);
             // Experimental branch switcher
             cms.flags.set("branch-switcher", true);
-
-            import("react-tinacms-editor").then((field) => {
-              cms.plugins.add(field.MarkdownFieldPlugin);
-            });
 
             const RouteMapping = new RouteMappingPlugin(
               (collection, document) => {
@@ -52,11 +52,8 @@ const App = ({ Component, pageProps }) => {
             cms.plugins.add(RouteMapping);
             return cms;
           }}
-          {...pageProps}
         >
-          {(livePageProps) => {
-            return <Component {...livePageProps} />;
-          }}
+          <Component {...pageProps} />;
         </TinaCMS>
       }
     >
