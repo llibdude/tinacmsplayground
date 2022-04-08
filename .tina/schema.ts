@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { TinaTemplate } from "@tinacms/cli";
 import { defineSchema, defineConfig, RouteMappingPlugin } from "tinacms";
 
