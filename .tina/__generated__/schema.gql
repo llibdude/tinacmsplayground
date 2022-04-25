@@ -126,6 +126,7 @@ type CampaignsConnection implements Connection {
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
+  deleteDocument(collection: String, relativePath: String!): DocumentNode!
   createDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
   updateCampaignsDocument(relativePath: String!, params: CampaignsMutation!): CampaignsDocument!
   createCampaignsDocument(relativePath: String!, params: CampaignsMutation!): CampaignsDocument!
