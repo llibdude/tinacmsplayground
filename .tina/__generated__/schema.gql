@@ -86,6 +86,7 @@ type CampaignsHeroMediaGenericFeature {
 union CampaignsHeroMedia = CampaignsHeroMediaGenericFeature
 
 type CampaignsHero {
+  image: String
   media: [CampaignsHeroMedia]
   title: String
   text: JSON
@@ -146,6 +147,7 @@ input CampaignsHeroMediaMutation {
 }
 
 input CampaignsHeroMutation {
+  image: String
   media: [CampaignsHeroMediaMutation]
   title: String
   text: JSON
