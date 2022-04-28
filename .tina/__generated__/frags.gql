@@ -1,6 +1,7 @@
 fragment CampaignsParts on Campaigns {
   hero {
     __typename
+    image
     media {
       __typename
       ... on CampaignsHeroMediaGenericFeature {

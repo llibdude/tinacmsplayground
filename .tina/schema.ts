@@ -48,6 +48,11 @@ const schema = defineSchema({
           },
           fields: [
             {
+              type: "image",
+              name: "image",
+              label: "Image",
+            },
+            {
               type: "object",
               name: "media",
               label: "Media Type",
@@ -94,6 +99,12 @@ const apiURL =
 export const tinaConfig = defineConfig({
   apiURL,
   schema,
+  mediaStore: async () => {
+    const pack = await import(
+      "../next-tinacms-cloudinary-modified/cloudinary-tina-cloud-media-store"
+    );
+    return pack.TinaCloudCloudinaryMediaStore;
+  },
   cmsCallback: (cms) => {
     // Use the new experimental admin
     cms.flags.set("tina-admin", true);
