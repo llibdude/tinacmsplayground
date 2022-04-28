@@ -1,4 +1,9 @@
-import { defineSchema, TinaTemplate } from "@tinacms/cli";
+import {
+  defineConfig,
+  defineSchema,
+  RouteMappingPlugin,
+  TinaTemplate,
+} from "tinacms";
 
 const genericFeatureBlockSchema: TinaTemplate = {
   name: "genericFeature",
@@ -23,7 +28,7 @@ const genericFeatureBlockSchema: TinaTemplate = {
   ],
 };
 
-export default defineSchema({
+const schema = defineSchema({
   collections: [
     {
       label: "Campaigns",
@@ -77,4 +82,39 @@ export default defineSchema({
       ],
     },
   ],
+});
+export default schema;
+
+const branch = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF || "main";
+const apiURL =
+  process.env.NODE_ENV == "development"
+    ? "http://localhost:4001/graphql"
+    : `https://content.tinajs.io/content/${process.env.NEXT_PUBLIC_TINA_CLIENT_ID}/github/${branch}`;
+
+export const tinaConfig = defineConfig({
+  apiURL,
+  schema,
+  cmsCallback: (cms) => {
+    // Use the new experimental admin
+    cms.flags.set("tina-admin", true);
+    // Experimental branch switcher
+    cms.flags.set("branch-switcher", true);
+
+    const RouteMapping = new RouteMappingPlugin((collection, document) => {
+      if (collection.name === "campaigns") {
+        return `/${document.sys.relativePath.slice(
+          0,
+          document.sys.extension.length * -1
+        )}`;
+      }
+
+      return `/${collection.name}/${document.sys.filename}`;
+    });
+
+    /**
+     * 2. Add the `RouteMappingPlugin` to the `cms`.
+     **/
+    cms.plugins.add(RouteMapping);
+    return cms;
+  },
 });
