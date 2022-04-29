@@ -68,8 +68,12 @@ export type Query = {
   getDocument: DocumentNode;
   getDocumentList: DocumentConnection;
   getDocumentFields: Scalars['JSON'];
-  getCampaignsDocument: CampaignsDocument;
-  getCampaignsList: CampaignsConnection;
+  getGlobalsDocument: GlobalsDocument;
+  getGlobalsList: GlobalsConnection;
+  getProjectsDocument: ProjectsDocument;
+  getProjectsList: ProjectsConnection;
+  getHomeDocument: HomeDocument;
+  getHomeList: HomeConnection;
 };
 
 
@@ -103,12 +107,40 @@ export type QueryGetDocumentListArgs = {
 };
 
 
-export type QueryGetCampaignsDocumentArgs = {
+export type QueryGetGlobalsDocumentArgs = {
   relativePath?: InputMaybe<Scalars['String']>;
 };
 
 
-export type QueryGetCampaignsListArgs = {
+export type QueryGetGlobalsListArgs = {
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Float']>;
+  last?: InputMaybe<Scalars['Float']>;
+  sort?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetProjectsDocumentArgs = {
+  relativePath?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetProjectsListArgs = {
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Float']>;
+  last?: InputMaybe<Scalars['Float']>;
+  sort?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetHomeDocumentArgs = {
+  relativePath?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryGetHomeListArgs = {
   before?: InputMaybe<Scalars['String']>;
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Float']>;
@@ -151,58 +183,165 @@ export type CollectionDocumentsArgs = {
   sort?: InputMaybe<Scalars['String']>;
 };
 
-export type DocumentNode = CampaignsDocument;
+export type DocumentNode = GlobalsDocument | ProjectsDocument | HomeDocument;
 
-export type CampaignsHeroMediaGenericFeature = {
-  __typename?: 'CampaignsHeroMediaGenericFeature';
+export type GlobalsNavItems = {
+  __typename?: 'GlobalsNavItems';
+  text: Scalars['String'];
+  url: Scalars['String'];
+  button?: Maybe<Scalars['Boolean']>;
+};
+
+export type GlobalsFooterContactFormText = {
+  __typename?: 'GlobalsFooterContactFormText';
   title?: Maybe<Scalars['String']>;
-  text?: Maybe<Scalars['JSON']>;
+  shortText?: Maybe<Scalars['String']>;
 };
 
-export type CampaignsHeroMedia = CampaignsHeroMediaGenericFeature;
-
-export type CampaignsHero = {
-  __typename?: 'CampaignsHero';
-  media?: Maybe<Array<Maybe<CampaignsHeroMedia>>>;
-  title?: Maybe<Scalars['String']>;
-  text?: Maybe<Scalars['JSON']>;
+export type GlobalsFooter = {
+  __typename?: 'GlobalsFooter';
+  logo: Scalars['String'];
+  contactFormText?: Maybe<GlobalsFooterContactFormText>;
+  contactDetails?: Maybe<Scalars['String']>;
 };
 
-export type CampaignsBlocksGenericFeature = {
-  __typename?: 'CampaignsBlocksGenericFeature';
-  title?: Maybe<Scalars['String']>;
-  text?: Maybe<Scalars['JSON']>;
+export type GlobalsBrandColours = {
+  __typename?: 'GlobalsBrandColours';
+  primary?: Maybe<Scalars['String']>;
 };
 
-export type CampaignsBlocks = CampaignsBlocksGenericFeature;
-
-export type Campaigns = {
-  __typename?: 'Campaigns';
-  hero?: Maybe<CampaignsHero>;
-  blocks?: Maybe<Array<Maybe<CampaignsBlocks>>>;
+export type GlobalsBrand = {
+  __typename?: 'GlobalsBrand';
+  colours?: Maybe<GlobalsBrandColours>;
 };
 
-export type CampaignsDocument = Node & Document & {
-  __typename?: 'CampaignsDocument';
+export type Globals = {
+  __typename?: 'Globals';
+  logo: Scalars['String'];
+  icon: Scalars['String'];
+  navItems?: Maybe<Array<Maybe<GlobalsNavItems>>>;
+  footer?: Maybe<GlobalsFooter>;
+  brand?: Maybe<GlobalsBrand>;
+};
+
+export type GlobalsDocument = Node & Document & {
+  __typename?: 'GlobalsDocument';
   id: Scalars['ID'];
   sys: SystemInfo;
-  data: Campaigns;
+  data: Globals;
   form: Scalars['JSON'];
   values: Scalars['JSON'];
   dataJSON: Scalars['JSON'];
 };
 
-export type CampaignsConnectionEdges = {
-  __typename?: 'CampaignsConnectionEdges';
+export type GlobalsConnectionEdges = {
+  __typename?: 'GlobalsConnectionEdges';
   cursor?: Maybe<Scalars['String']>;
-  node?: Maybe<CampaignsDocument>;
+  node?: Maybe<GlobalsDocument>;
 };
 
-export type CampaignsConnection = Connection & {
-  __typename?: 'CampaignsConnection';
+export type GlobalsConnection = Connection & {
+  __typename?: 'GlobalsConnection';
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Float'];
-  edges?: Maybe<Array<Maybe<CampaignsConnectionEdges>>>;
+  edges?: Maybe<Array<Maybe<GlobalsConnectionEdges>>>;
+};
+
+export type ProjectsSeo = {
+  __typename?: 'ProjectsSeo';
+  title: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  socialImage?: Maybe<Scalars['String']>;
+};
+
+export type Projects = {
+  __typename?: 'Projects';
+  seo?: Maybe<ProjectsSeo>;
+  title: Scalars['String'];
+  backgroundImage: Scalars['String'];
+  mainImage?: Maybe<Scalars['String']>;
+  completionDate: Scalars['String'];
+  projectDescription?: Maybe<Scalars['JSON']>;
+};
+
+export type ProjectsDocument = Node & Document & {
+  __typename?: 'ProjectsDocument';
+  id: Scalars['ID'];
+  sys: SystemInfo;
+  data: Projects;
+  form: Scalars['JSON'];
+  values: Scalars['JSON'];
+  dataJSON: Scalars['JSON'];
+};
+
+export type ProjectsConnectionEdges = {
+  __typename?: 'ProjectsConnectionEdges';
+  cursor?: Maybe<Scalars['String']>;
+  node?: Maybe<ProjectsDocument>;
+};
+
+export type ProjectsConnection = Connection & {
+  __typename?: 'ProjectsConnection';
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Float'];
+  edges?: Maybe<Array<Maybe<ProjectsConnectionEdges>>>;
+};
+
+export type HomeSeo = {
+  __typename?: 'HomeSeo';
+  title: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  socialImage?: Maybe<Scalars['String']>;
+};
+
+export type HomeHero = {
+  __typename?: 'HomeHero';
+  title: Scalars['String'];
+  subtitle: Scalars['String'];
+  image: Scalars['String'];
+};
+
+export type HomeFeaturedProjectsProject1Document = ProjectsDocument;
+
+export type HomeFeaturedProjectsProject2Document = ProjectsDocument;
+
+export type HomeFeaturedProjectsProject3Document = ProjectsDocument;
+
+export type HomeFeaturedProjects = {
+  __typename?: 'HomeFeaturedProjects';
+  project1?: Maybe<HomeFeaturedProjectsProject1Document>;
+  project2?: Maybe<HomeFeaturedProjectsProject2Document>;
+  project3?: Maybe<HomeFeaturedProjectsProject3Document>;
+};
+
+export type Home = {
+  __typename?: 'Home';
+  seo?: Maybe<HomeSeo>;
+  hero?: Maybe<HomeHero>;
+  featuredProjects?: Maybe<HomeFeaturedProjects>;
+};
+
+export type HomeDocument = Node & Document & {
+  __typename?: 'HomeDocument';
+  id: Scalars['ID'];
+  sys: SystemInfo;
+  data: Home;
+  form: Scalars['JSON'];
+  values: Scalars['JSON'];
+  dataJSON: Scalars['JSON'];
+};
+
+export type HomeConnectionEdges = {
+  __typename?: 'HomeConnectionEdges';
+  cursor?: Maybe<Scalars['String']>;
+  node?: Maybe<HomeDocument>;
+};
+
+export type HomeConnection = Connection & {
+  __typename?: 'HomeConnection';
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Float'];
+  edges?: Maybe<Array<Maybe<HomeConnectionEdges>>>;
 };
 
 export type Mutation = {
@@ -211,8 +350,12 @@ export type Mutation = {
   updateDocument: DocumentNode;
   deleteDocument: DocumentNode;
   createDocument: DocumentNode;
-  updateCampaignsDocument: CampaignsDocument;
-  createCampaignsDocument: CampaignsDocument;
+  updateGlobalsDocument: GlobalsDocument;
+  createGlobalsDocument: GlobalsDocument;
+  updateProjectsDocument: ProjectsDocument;
+  createProjectsDocument: ProjectsDocument;
+  updateHomeDocument: HomeDocument;
+  createHomeDocument: HomeDocument;
 };
 
 
@@ -243,90 +386,242 @@ export type MutationCreateDocumentArgs = {
 };
 
 
-export type MutationUpdateCampaignsDocumentArgs = {
+export type MutationUpdateGlobalsDocumentArgs = {
   relativePath: Scalars['String'];
-  params: CampaignsMutation;
+  params: GlobalsMutation;
 };
 
 
-export type MutationCreateCampaignsDocumentArgs = {
+export type MutationCreateGlobalsDocumentArgs = {
   relativePath: Scalars['String'];
-  params: CampaignsMutation;
+  params: GlobalsMutation;
+};
+
+
+export type MutationUpdateProjectsDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: ProjectsMutation;
+};
+
+
+export type MutationCreateProjectsDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: ProjectsMutation;
+};
+
+
+export type MutationUpdateHomeDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: HomeMutation;
+};
+
+
+export type MutationCreateHomeDocumentArgs = {
+  relativePath: Scalars['String'];
+  params: HomeMutation;
 };
 
 export type DocumentMutation = {
-  campaigns?: InputMaybe<CampaignsMutation>;
+  globals?: InputMaybe<GlobalsMutation>;
+  projects?: InputMaybe<ProjectsMutation>;
+  home?: InputMaybe<HomeMutation>;
 };
 
-export type CampaignsHeroMediaGenericFeatureMutation = {
+export type GlobalsNavItemsMutation = {
+  text?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+  button?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type GlobalsFooterContactFormTextMutation = {
   title?: InputMaybe<Scalars['String']>;
-  text?: InputMaybe<Scalars['JSON']>;
+  shortText?: InputMaybe<Scalars['String']>;
 };
 
-export type CampaignsHeroMediaMutation = {
-  genericFeature?: InputMaybe<CampaignsHeroMediaGenericFeatureMutation>;
+export type GlobalsFooterMutation = {
+  logo?: InputMaybe<Scalars['String']>;
+  contactFormText?: InputMaybe<GlobalsFooterContactFormTextMutation>;
+  contactDetails?: InputMaybe<Scalars['String']>;
 };
 
-export type CampaignsHeroMutation = {
-  media?: InputMaybe<Array<InputMaybe<CampaignsHeroMediaMutation>>>;
+export type GlobalsBrandColoursMutation = {
+  primary?: InputMaybe<Scalars['String']>;
+};
+
+export type GlobalsBrandMutation = {
+  colours?: InputMaybe<GlobalsBrandColoursMutation>;
+};
+
+export type GlobalsMutation = {
+  logo?: InputMaybe<Scalars['String']>;
+  icon?: InputMaybe<Scalars['String']>;
+  navItems?: InputMaybe<Array<InputMaybe<GlobalsNavItemsMutation>>>;
+  footer?: InputMaybe<GlobalsFooterMutation>;
+  brand?: InputMaybe<GlobalsBrandMutation>;
+};
+
+export type ProjectsSeoMutation = {
   title?: InputMaybe<Scalars['String']>;
-  text?: InputMaybe<Scalars['JSON']>;
+  description?: InputMaybe<Scalars['String']>;
+  socialImage?: InputMaybe<Scalars['String']>;
 };
 
-export type CampaignsBlocksGenericFeatureMutation = {
+export type ProjectsMutation = {
+  seo?: InputMaybe<ProjectsSeoMutation>;
   title?: InputMaybe<Scalars['String']>;
-  text?: InputMaybe<Scalars['JSON']>;
+  backgroundImage?: InputMaybe<Scalars['String']>;
+  mainImage?: InputMaybe<Scalars['String']>;
+  completionDate?: InputMaybe<Scalars['String']>;
+  projectDescription?: InputMaybe<Scalars['JSON']>;
 };
 
-export type CampaignsBlocksMutation = {
-  genericFeature?: InputMaybe<CampaignsBlocksGenericFeatureMutation>;
+export type HomeSeoMutation = {
+  title?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  socialImage?: InputMaybe<Scalars['String']>;
 };
 
-export type CampaignsMutation = {
-  hero?: InputMaybe<CampaignsHeroMutation>;
-  blocks?: InputMaybe<Array<InputMaybe<CampaignsBlocksMutation>>>;
+export type HomeHeroMutation = {
+  title?: InputMaybe<Scalars['String']>;
+  subtitle?: InputMaybe<Scalars['String']>;
+  image?: InputMaybe<Scalars['String']>;
 };
 
-export type CampaignsPartsFragment = { __typename?: 'Campaigns', hero?: { __typename: 'CampaignsHero', title?: string | null, text?: any | null, media?: Array<{ __typename: 'CampaignsHeroMediaGenericFeature', title?: string | null, text?: any | null } | null> | null } | null, blocks?: Array<{ __typename: 'CampaignsBlocksGenericFeature', title?: string | null, text?: any | null } | null> | null };
+export type HomeFeaturedProjectsMutation = {
+  project1?: InputMaybe<Scalars['String']>;
+  project2?: InputMaybe<Scalars['String']>;
+  project3?: InputMaybe<Scalars['String']>;
+};
 
-export type GetCampaignsDocumentQueryVariables = Exact<{
+export type HomeMutation = {
+  seo?: InputMaybe<HomeSeoMutation>;
+  hero?: InputMaybe<HomeHeroMutation>;
+  featuredProjects?: InputMaybe<HomeFeaturedProjectsMutation>;
+};
+
+export type GlobalsPartsFragment = { __typename?: 'Globals', logo: string, icon: string, navItems?: Array<{ __typename: 'GlobalsNavItems', text: string, url: string, button?: boolean | null } | null> | null, footer?: { __typename: 'GlobalsFooter', logo: string, contactDetails?: string | null, contactFormText?: { __typename: 'GlobalsFooterContactFormText', title?: string | null, shortText?: string | null } | null } | null, brand?: { __typename: 'GlobalsBrand', colours?: { __typename: 'GlobalsBrandColours', primary?: string | null } | null } | null };
+
+export type ProjectsPartsFragment = { __typename?: 'Projects', title: string, backgroundImage: string, mainImage?: string | null, completionDate: string, projectDescription?: any | null, seo?: { __typename: 'ProjectsSeo', title: string, description?: string | null, socialImage?: string | null } | null };
+
+export type HomePartsFragment = { __typename?: 'Home', seo?: { __typename: 'HomeSeo', title: string, description?: string | null, socialImage?: string | null } | null, hero?: { __typename: 'HomeHero', title: string, subtitle: string, image: string } | null, featuredProjects?: { __typename: 'HomeFeaturedProjects', project1?: { __typename?: 'ProjectsDocument', id: string } | null, project2?: { __typename?: 'ProjectsDocument', id: string } | null, project3?: { __typename?: 'ProjectsDocument', id: string } | null } | null };
+
+export type GetGlobalsDocumentQueryVariables = Exact<{
   relativePath: Scalars['String'];
 }>;
 
 
-export type GetCampaignsDocumentQuery = { __typename?: 'Query', getCampaignsDocument: { __typename?: 'CampaignsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Campaigns', hero?: { __typename: 'CampaignsHero', title?: string | null, text?: any | null, media?: Array<{ __typename: 'CampaignsHeroMediaGenericFeature', title?: string | null, text?: any | null } | null> | null } | null, blocks?: Array<{ __typename: 'CampaignsBlocksGenericFeature', title?: string | null, text?: any | null } | null> | null } } };
+export type GetGlobalsDocumentQuery = { __typename?: 'Query', getGlobalsDocument: { __typename?: 'GlobalsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Globals', logo: string, icon: string, navItems?: Array<{ __typename: 'GlobalsNavItems', text: string, url: string, button?: boolean | null } | null> | null, footer?: { __typename: 'GlobalsFooter', logo: string, contactDetails?: string | null, contactFormText?: { __typename: 'GlobalsFooterContactFormText', title?: string | null, shortText?: string | null } | null } | null, brand?: { __typename: 'GlobalsBrand', colours?: { __typename: 'GlobalsBrandColours', primary?: string | null } | null } | null } } };
 
-export type GetCampaignsListQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetGlobalsListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCampaignsListQuery = { __typename?: 'Query', getCampaignsList: { __typename?: 'CampaignsConnection', totalCount: number, edges?: Array<{ __typename?: 'CampaignsConnectionEdges', node?: { __typename?: 'CampaignsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Campaigns', hero?: { __typename: 'CampaignsHero', title?: string | null, text?: any | null, media?: Array<{ __typename: 'CampaignsHeroMediaGenericFeature', title?: string | null, text?: any | null } | null> | null } | null, blocks?: Array<{ __typename: 'CampaignsBlocksGenericFeature', title?: string | null, text?: any | null } | null> | null } } | null } | null> | null } };
+export type GetGlobalsListQuery = { __typename?: 'Query', getGlobalsList: { __typename?: 'GlobalsConnection', totalCount: number, edges?: Array<{ __typename?: 'GlobalsConnectionEdges', node?: { __typename?: 'GlobalsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Globals', logo: string, icon: string, navItems?: Array<{ __typename: 'GlobalsNavItems', text: string, url: string, button?: boolean | null } | null> | null, footer?: { __typename: 'GlobalsFooter', logo: string, contactDetails?: string | null, contactFormText?: { __typename: 'GlobalsFooterContactFormText', title?: string | null, shortText?: string | null } | null } | null, brand?: { __typename: 'GlobalsBrand', colours?: { __typename: 'GlobalsBrandColours', primary?: string | null } | null } | null } } | null } | null> | null } };
 
-export const CampaignsPartsFragmentDoc = gql`
-    fragment CampaignsParts on Campaigns {
-  hero {
+export type GetProjectsDocumentQueryVariables = Exact<{
+  relativePath: Scalars['String'];
+}>;
+
+
+export type GetProjectsDocumentQuery = { __typename?: 'Query', getProjectsDocument: { __typename?: 'ProjectsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Projects', title: string, backgroundImage: string, mainImage?: string | null, completionDate: string, projectDescription?: any | null, seo?: { __typename: 'ProjectsSeo', title: string, description?: string | null, socialImage?: string | null } | null } } };
+
+export type GetProjectsListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProjectsListQuery = { __typename?: 'Query', getProjectsList: { __typename?: 'ProjectsConnection', totalCount: number, edges?: Array<{ __typename?: 'ProjectsConnectionEdges', node?: { __typename?: 'ProjectsDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Projects', title: string, backgroundImage: string, mainImage?: string | null, completionDate: string, projectDescription?: any | null, seo?: { __typename: 'ProjectsSeo', title: string, description?: string | null, socialImage?: string | null } | null } } | null } | null> | null } };
+
+export type GetHomeDocumentQueryVariables = Exact<{
+  relativePath: Scalars['String'];
+}>;
+
+
+export type GetHomeDocumentQuery = { __typename?: 'Query', getHomeDocument: { __typename?: 'HomeDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Home', seo?: { __typename: 'HomeSeo', title: string, description?: string | null, socialImage?: string | null } | null, hero?: { __typename: 'HomeHero', title: string, subtitle: string, image: string } | null, featuredProjects?: { __typename: 'HomeFeaturedProjects', project1?: { __typename?: 'ProjectsDocument', id: string } | null, project2?: { __typename?: 'ProjectsDocument', id: string } | null, project3?: { __typename?: 'ProjectsDocument', id: string } | null } | null } } };
+
+export type GetHomeListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetHomeListQuery = { __typename?: 'Query', getHomeList: { __typename?: 'HomeConnection', totalCount: number, edges?: Array<{ __typename?: 'HomeConnectionEdges', node?: { __typename?: 'HomeDocument', id: string, sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, data: { __typename?: 'Home', seo?: { __typename: 'HomeSeo', title: string, description?: string | null, socialImage?: string | null } | null, hero?: { __typename: 'HomeHero', title: string, subtitle: string, image: string } | null, featuredProjects?: { __typename: 'HomeFeaturedProjects', project1?: { __typename?: 'ProjectsDocument', id: string } | null, project2?: { __typename?: 'ProjectsDocument', id: string } | null, project3?: { __typename?: 'ProjectsDocument', id: string } | null } | null } } | null } | null> | null } };
+
+export const GlobalsPartsFragmentDoc = gql`
+    fragment GlobalsParts on Globals {
+  logo
+  icon
+  navItems {
     __typename
-    media {
-      __typename
-      ... on CampaignsHeroMediaGenericFeature {
-        title
-        text
-      }
-    }
-    title
     text
+    url
+    button
   }
-  blocks {
+  footer {
     __typename
-    ... on CampaignsBlocksGenericFeature {
+    logo
+    contactFormText {
+      __typename
       title
-      text
+      shortText
+    }
+    contactDetails
+  }
+  brand {
+    __typename
+    colours {
+      __typename
+      primary
     }
   }
 }
     `;
-export const GetCampaignsDocumentDocument = gql`
-    query getCampaignsDocument($relativePath: String!) {
-  getCampaignsDocument(relativePath: $relativePath) {
+export const ProjectsPartsFragmentDoc = gql`
+    fragment ProjectsParts on Projects {
+  seo {
+    __typename
+    title
+    description
+    socialImage
+  }
+  title
+  backgroundImage
+  mainImage
+  completionDate
+  projectDescription
+}
+    `;
+export const HomePartsFragmentDoc = gql`
+    fragment HomeParts on Home {
+  seo {
+    __typename
+    title
+    description
+    socialImage
+  }
+  hero {
+    __typename
+    title
+    subtitle
+    image
+  }
+  featuredProjects {
+    __typename
+    project1 {
+      ... on Document {
+        id
+      }
+    }
+    project2 {
+      ... on Document {
+        id
+      }
+    }
+    project3 {
+      ... on Document {
+        id
+      }
+    }
+  }
+}
+    `;
+export const GetGlobalsDocumentDocument = gql`
+    query getGlobalsDocument($relativePath: String!) {
+  getGlobalsDocument(relativePath: $relativePath) {
     sys {
       filename
       basename
@@ -337,14 +632,14 @@ export const GetCampaignsDocumentDocument = gql`
     }
     id
     data {
-      ...CampaignsParts
+      ...GlobalsParts
     }
   }
 }
-    ${CampaignsPartsFragmentDoc}`;
-export const GetCampaignsListDocument = gql`
-    query getCampaignsList {
-  getCampaignsList {
+    ${GlobalsPartsFragmentDoc}`;
+export const GetGlobalsListDocument = gql`
+    query getGlobalsList {
+  getGlobalsList {
     totalCount
     edges {
       node {
@@ -358,21 +653,115 @@ export const GetCampaignsListDocument = gql`
           extension
         }
         data {
-          ...CampaignsParts
+          ...GlobalsParts
         }
       }
     }
   }
 }
-    ${CampaignsPartsFragmentDoc}`;
+    ${GlobalsPartsFragmentDoc}`;
+export const GetProjectsDocumentDocument = gql`
+    query getProjectsDocument($relativePath: String!) {
+  getProjectsDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...ProjectsParts
+    }
+  }
+}
+    ${ProjectsPartsFragmentDoc}`;
+export const GetProjectsListDocument = gql`
+    query getProjectsList {
+  getProjectsList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...ProjectsParts
+        }
+      }
+    }
+  }
+}
+    ${ProjectsPartsFragmentDoc}`;
+export const GetHomeDocumentDocument = gql`
+    query getHomeDocument($relativePath: String!) {
+  getHomeDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...HomeParts
+    }
+  }
+}
+    ${HomePartsFragmentDoc}`;
+export const GetHomeListDocument = gql`
+    query getHomeList {
+  getHomeList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...HomeParts
+        }
+      }
+    }
+  }
+}
+    ${HomePartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
-      getCampaignsDocument(variables: GetCampaignsDocumentQueryVariables, options?: C): Promise<{data: GetCampaignsDocumentQuery, variables: GetCampaignsDocumentQueryVariables, query: string}> {
-        return requester<{data: GetCampaignsDocumentQuery, variables: GetCampaignsDocumentQueryVariables, query: string}, GetCampaignsDocumentQueryVariables>(GetCampaignsDocumentDocument, variables, options);
+      getGlobalsDocument(variables: GetGlobalsDocumentQueryVariables, options?: C): Promise<{data: GetGlobalsDocumentQuery, variables: GetGlobalsDocumentQueryVariables, query: string}> {
+        return requester<{data: GetGlobalsDocumentQuery, variables: GetGlobalsDocumentQueryVariables, query: string}, GetGlobalsDocumentQueryVariables>(GetGlobalsDocumentDocument, variables, options);
       },
-    getCampaignsList(variables?: GetCampaignsListQueryVariables, options?: C): Promise<{data: GetCampaignsListQuery, variables: GetCampaignsListQueryVariables, query: string}> {
-        return requester<{data: GetCampaignsListQuery, variables: GetCampaignsListQueryVariables, query: string}, GetCampaignsListQueryVariables>(GetCampaignsListDocument, variables, options);
+    getGlobalsList(variables?: GetGlobalsListQueryVariables, options?: C): Promise<{data: GetGlobalsListQuery, variables: GetGlobalsListQueryVariables, query: string}> {
+        return requester<{data: GetGlobalsListQuery, variables: GetGlobalsListQueryVariables, query: string}, GetGlobalsListQueryVariables>(GetGlobalsListDocument, variables, options);
+      },
+    getProjectsDocument(variables: GetProjectsDocumentQueryVariables, options?: C): Promise<{data: GetProjectsDocumentQuery, variables: GetProjectsDocumentQueryVariables, query: string}> {
+        return requester<{data: GetProjectsDocumentQuery, variables: GetProjectsDocumentQueryVariables, query: string}, GetProjectsDocumentQueryVariables>(GetProjectsDocumentDocument, variables, options);
+      },
+    getProjectsList(variables?: GetProjectsListQueryVariables, options?: C): Promise<{data: GetProjectsListQuery, variables: GetProjectsListQueryVariables, query: string}> {
+        return requester<{data: GetProjectsListQuery, variables: GetProjectsListQueryVariables, query: string}, GetProjectsListQueryVariables>(GetProjectsListDocument, variables, options);
+      },
+    getHomeDocument(variables: GetHomeDocumentQueryVariables, options?: C): Promise<{data: GetHomeDocumentQuery, variables: GetHomeDocumentQueryVariables, query: string}> {
+        return requester<{data: GetHomeDocumentQuery, variables: GetHomeDocumentQueryVariables, query: string}, GetHomeDocumentQueryVariables>(GetHomeDocumentDocument, variables, options);
+      },
+    getHomeList(variables?: GetHomeListQueryVariables, options?: C): Promise<{data: GetHomeListQuery, variables: GetHomeListQueryVariables, query: string}> {
+        return requester<{data: GetHomeListQuery, variables: GetHomeListQueryVariables, query: string}, GetHomeListQueryVariables>(GetHomeListDocument, variables, options);
       }
     };
   }

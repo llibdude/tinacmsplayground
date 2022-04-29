@@ -1,21 +1,74 @@
-fragment CampaignsParts on Campaigns {
+fragment GlobalsParts on Globals {
+  logo
+  icon
+  navItems {
+    __typename
+    text
+    url
+    button
+  }
+  footer {
+    __typename
+    logo
+    contactFormText {
+      __typename
+      title
+      shortText
+    }
+    contactDetails
+  }
+  brand {
+    __typename
+    colours {
+      __typename
+      primary
+    }
+  }
+}
+
+fragment ProjectsParts on Projects {
+  seo {
+    __typename
+    title
+    description
+    socialImage
+  }
+  title
+  backgroundImage
+  mainImage
+  completionDate
+  projectDescription
+}
+
+fragment HomeParts on Home {
+  seo {
+    __typename
+    title
+    description
+    socialImage
+  }
   hero {
     __typename
-    media {
-      __typename
-      ... on CampaignsHeroMediaGenericFeature {
-        title
-        text
+    title
+    subtitle
+    image
+  }
+  featuredProjects {
+    __typename
+    project1 {
+      ... on Document {
+        id
       }
     }
-    title
-    text
-  }
-  blocks {
-    __typename
-    ... on CampaignsBlocksGenericFeature {
-      title
-      text
+    project2 {
+      ... on Document {
+        id
+      }
+    }
+    project3 {
+      ... on Document {
+        id
+      }
     }
   }
 }

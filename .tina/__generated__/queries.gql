@@ -1,5 +1,5 @@
-query getCampaignsDocument($relativePath: String!) {
-  getCampaignsDocument(relativePath: $relativePath) {
+query getGlobalsDocument($relativePath: String!) {
+  getGlobalsDocument(relativePath: $relativePath) {
     sys {
       filename
       basename
@@ -10,13 +10,13 @@ query getCampaignsDocument($relativePath: String!) {
     }
     id
     data {
-      ...CampaignsParts
+      ...GlobalsParts
     }
   }
 }
 
-query getCampaignsList {
-  getCampaignsList {
+query getGlobalsList {
+  getGlobalsList {
     totalCount
     edges {
       node {
@@ -30,7 +30,85 @@ query getCampaignsList {
           extension
         }
         data {
-          ...CampaignsParts
+          ...GlobalsParts
+        }
+      }
+    }
+  }
+}
+
+query getProjectsDocument($relativePath: String!) {
+  getProjectsDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...ProjectsParts
+    }
+  }
+}
+
+query getProjectsList {
+  getProjectsList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...ProjectsParts
+        }
+      }
+    }
+  }
+}
+
+query getHomeDocument($relativePath: String!) {
+  getHomeDocument(relativePath: $relativePath) {
+    sys {
+      filename
+      basename
+      breadcrumbs
+      path
+      relativePath
+      extension
+    }
+    id
+    data {
+      ...HomeParts
+    }
+  }
+}
+
+query getHomeList {
+  getHomeList {
+    totalCount
+    edges {
+      node {
+        id
+        sys {
+          filename
+          basename
+          breadcrumbs
+          path
+          relativePath
+          extension
+        }
+        data {
+          ...HomeParts
         }
       }
     }
