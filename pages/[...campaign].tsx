@@ -13,6 +13,9 @@ import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { ExperimentalGetTinaClient } from "../.tina/__generated__/types";
 import { useTina } from "tinacms/dist/edit-state";
 
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { tomorrow } from "react-syntax-highlighter/dist/cjs/styles/hljs";
+
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = ExperimentalGetTinaClient();
   const campaignsListData = await client.campaignsConnection();
@@ -48,6 +51,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 };
 
+const components = {
+  code_block: (props: any) => {
+    const language = props.lang || undefined;
+    return (
+      <SyntaxHighlighter
+        className="bg-primary p-2 text-[14px]"
+        language={language}
+        style={tomorrow}
+        customStyle={{ padding: undefined, background: undefined }}
+      >
+        {props.children}
+      </SyntaxHighlighter>
+    );
+  },
+};
+
 const Campaign: React.FC<any> = (props) => {
   const { data } = useTina({
     query: props.query,
@@ -81,7 +100,7 @@ const Campaign: React.FC<any> = (props) => {
             >
               {block.title}
             </h2>
-            <TinaMarkdown content={block.text} />
+            <TinaMarkdown content={block.text} components={components} />
           </section>
         );
       })}
