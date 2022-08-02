@@ -102,13 +102,13 @@ export const tinaConfig = defineConfig({
 
     const RouteMapping = new RouteMappingPlugin((collection, document) => {
       if (collection.name === "campaigns") {
-        return `/${document.sys.relativePath.slice(
+        return `/${document._sys.relativePath.slice(
           0,
-          document.sys.extension.length * -1
+          document._sys.extension.length * -1
         )}`;
       }
 
-      return `/${collection.name}/${document.sys.filename}`;
+      return `/${collection.name}/${document._sys.filename}`;
     });
 
     /**

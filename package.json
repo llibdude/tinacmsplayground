@@ -7,12 +7,12 @@
     "start": "yarn tinacms server:start -c \"next start\""
   },
   "dependencies": {
-    "@tinacms/cli": "^0.60.12",
+    "@tinacms/cli": "^0.60.28",
     "next": "^12.1.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "styled-components": "^5.3.3",
-    "tinacms": "^0.67.3",
+    "tinacms": "^0.68.13",
     "typescript": "^4.6.2"
   },
   "devDependencies": {

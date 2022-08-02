@@ -15,11 +15,11 @@ import { useTina } from "tinacms/dist/edit-state";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const client = ExperimentalGetTinaClient();
-  const campaignsListData = await client.getCampaignsList();
+  const campaignsListData = await client.campaignsConnection();
 
   return {
-    paths: campaignsListData.data.getCampaignsList.edges.map((page) => ({
-      params: { campaign: [page.node.sys.filename] },
+    paths: campaignsListData.data.campaignsConnection.edges.map((page) => ({
+      params: { campaign: [page.node._sys.filename] },
     })),
     fallback: false,
   };
@@ -27,7 +27,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const client = ExperimentalGetTinaClient();
-  const tinaProps = await client.getCampaignsDocument({
+  const tinaProps = await client.campaigns({
     relativePath: String(`${(params.campaign as string[]).join("/")}.mdx`),
   });
 
@@ -55,7 +55,7 @@ const Campaign: React.FC<any> = (props) => {
     data: props.data,
   });
 
-  const d = data.getCampaignsDocument.data;
+  const d = data.campaigns;
 
   return (
     <div className="mx-10">

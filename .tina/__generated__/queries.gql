@@ -1,37 +1,43 @@
-query getCampaignsDocument($relativePath: String!) {
-  getCampaignsDocument(relativePath: $relativePath) {
-    sys {
-      filename
-      basename
-      breadcrumbs
-      path
-      relativePath
-      extension
+query campaigns($relativePath: String!) {
+  campaigns(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
     }
-    id
-    data {
-      ...CampaignsParts
-    }
+    ...CampaignsParts
   }
 }
 
-query getCampaignsList {
-  getCampaignsList {
+query campaignsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String) {
+  campaignsConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+  ) {
     totalCount
     edges {
       node {
-        id
-        sys {
-          filename
-          basename
-          breadcrumbs
-          path
-          relativePath
-          extension
+        ... on Document {
+          _sys {
+            filename
+            basename
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
         }
-        data {
-          ...CampaignsParts
-        }
+        ...CampaignsParts
       }
     }
   }

@@ -7,6 +7,7 @@ scalar JSON
 
 type SystemInfo {
   filename: String!
+  title: String
   basename: String!
   breadcrumbs(excludeExtension: Boolean): [String!]!
   path: String!
@@ -30,36 +31,34 @@ interface Node {
 
 """"""
 interface Document {
-  sys: SystemInfo
   id: ID!
-  form: JSON!
-  values: JSON!
+  _sys: SystemInfo
+  _values: JSON!
 }
 
 """A relay-compliant pagination connection"""
 interface Connection {
   totalCount: Float!
+  pageInfo: PageInfo!
 }
 
 type Query {
   getOptimizedQuery(queryString: String!): String
-  getCollection(collection: String): Collection!
-  getCollections: [Collection!]!
+  collection(collection: String): Collection!
+  collections: [Collection!]!
   node(id: String): Node!
-  getDocument(collection: String, relativePath: String): DocumentNode!
-  getDocumentList(before: String, after: String, first: Float, last: Float, sort: String): DocumentConnection!
-  getDocumentFields: JSON!
-  getCampaignsDocument(relativePath: String): CampaignsDocument!
-  getCampaignsList(before: String, after: String, first: Float, last: Float, sort: String): CampaignsConnection!
+  document(collection: String, relativePath: String): DocumentNode!
+  campaigns(relativePath: String): Campaigns!
+  campaignsConnection(before: String, after: String, first: Float, last: Float, sort: String): CampaignsConnection!
 }
 
 type DocumentConnectionEdges {
-  cursor: String
+  cursor: String!
   node: DocumentNode
 }
 
 type DocumentConnection implements Connection {
-  pageInfo: PageInfo
+  pageInfo: PageInfo!
   totalCount: Float!
   edges: [DocumentConnectionEdges]
 }
@@ -76,7 +75,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String): DocumentConnection!
 }
 
-union DocumentNode = CampaignsDocument
+union DocumentNode = Campaigns
 
 type CampaignsHeroMediaGenericFeature {
   title: String
@@ -98,27 +97,21 @@ type CampaignsBlocksGenericFeature {
 
 union CampaignsBlocks = CampaignsBlocksGenericFeature
 
-type Campaigns {
+type Campaigns implements Node & Document {
   hero: CampaignsHero
   blocks: [CampaignsBlocks]
-}
-
-type CampaignsDocument implements Node & Document {
   id: ID!
-  sys: SystemInfo!
-  data: Campaigns!
-  form: JSON!
-  values: JSON!
-  dataJSON: JSON!
+  _sys: SystemInfo!
+  _values: JSON!
 }
 
 type CampaignsConnectionEdges {
-  cursor: String
-  node: CampaignsDocument
+  cursor: String!
+  node: Campaigns
 }
 
 type CampaignsConnection implements Connection {
-  pageInfo: PageInfo
+  pageInfo: PageInfo!
   totalCount: Float!
   edges: [CampaignsConnectionEdges]
 }
@@ -128,8 +121,8 @@ type Mutation {
   updateDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
   deleteDocument(collection: String, relativePath: String!): DocumentNode!
   createDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
-  updateCampaignsDocument(relativePath: String!, params: CampaignsMutation!): CampaignsDocument!
-  createCampaignsDocument(relativePath: String!, params: CampaignsMutation!): CampaignsDocument!
+  updateCampaigns(relativePath: String!, params: CampaignsMutation!): Campaigns!
+  createCampaigns(relativePath: String!, params: CampaignsMutation!): Campaigns!
 }
 
 input DocumentMutation {
